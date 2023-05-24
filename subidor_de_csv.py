@@ -28,6 +28,8 @@ if (checa == 'Y' or checa == '') and '.csv' in filename:
     
     #here you have to change to your ODBC
     pd.set_option('display.float_format', lambda x: '%.3f' % x)
+    
+    #make sure you change your connection string
     conn = pyodbc.connect('<your connection string>')
     cursor = conn.cursor()
 
@@ -69,7 +71,7 @@ if (checa == 'Y' or checa == '') and '.csv' in filename:
         
         batizado = batizado[:-4]
         
-        create = "CREATE TABLE CDG.." + batizado + " (   {}    )".format(Text_Block)
+        create = "CREATE TABLE " + batizado + " (   {}    )".format(Text_Block)
         cursor.execute(create)
         cursor.execute("commit")
         cursor.close()
@@ -79,7 +81,7 @@ if (checa == 'Y' or checa == '') and '.csv' in filename:
         for x in range(len(df_final.columns)):
             interrogs += '?,'
         interrogs = interrogs[:-1]
-        insert_to_tmp_tbl_stmt = f"INSERT INTO CDG.."+batizado+" VALUES ("+interrogs+")"
+        insert_to_tmp_tbl_stmt = f"INSERT INTO "+batizado+" VALUES ("+interrogs+")"
         cursor = conn.cursor()
         cursor.fast_executemany = True
         cursor.executemany(insert_to_tmp_tbl_stmt, df_final.values.tolist())
