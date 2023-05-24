@@ -28,10 +28,7 @@ if (checa == 'Y' or checa == '') and '.csv' in filename:
     
     #here you have to change to your ODBC
     pd.set_option('display.float_format', lambda x: '%.3f' % x)
-    conn = pyodbc.connect('Driver={SQL Server};'
-                          'Server=10.128.222.10;'
-                          'Database=CDG;'
-                          'Trusted_Connection=yes;')
+    conn = pyodbc.connect('<your connection string>')
     cursor = conn.cursor()
 
     #Get rid of invalid characters in the column names
